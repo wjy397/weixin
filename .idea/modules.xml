@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../AssetsPool/.idea/AssetsPool.iml" filepath="$PROJECT_DIR$/../AssetsPool/.idea/AssetsPool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/wechat_huoyun.iml" filepath="$PROJECT_DIR$/.idea/wechat_huoyun.iml" />
+    </modules>
+  </component>
+</project>
