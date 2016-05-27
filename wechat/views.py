@@ -5,7 +5,7 @@ import hashlib
 
 @csrf_exempt
 def WeChat(request):
-    return HttpResponse('hello')
+    return HttpResponse('teststsuccessful_test')
     # #下面这四个参数是在接入时，微信的服务器发送过来的参数
     # signature = request.GET.get('signature', None)
     # timestamp = request.GET.get('timestamp', None)
