@@ -32,3 +32,32 @@ def WeChat(request):
           return HttpResponse(echostr)
     except:
         return  HttpResponse('something is error!')
+
+def init_conf(request):
+    # #将access_token存储在session中，用于conf初始化参数调用。
+    # _session_access_token =  request.session.get('access_token',default=None)
+    # _session_token_expires_at= request.session.get('expires_at',default=None)
+    #服务器运行执行一次conf初始化，此页面路由功能触发方法不会触发conf初始化
+    from wechat_sdk import WechatConf
+    conf = WechatConf(
+        token='ebaquan',
+        appid='wx118e7112b523d38c',
+        appsecret='1c3333999c59cc873ea8d737c74ed85b',
+        encrypt_mode='normal',  # 可选项：normal/compatible/safe，分别对应于 明文/兼容/安全 模式
+        encoding_aes_key='TRROyP9RVUSIpeqa8VRHaAt4l9STZKvA6fZZE2N9dmc'  # 如果传入此值则必须保证同时传入 token, appid
+        # access_token=_session_access_token,
+        # access_token_expires_at=_session_token_expires_at
+    )
+    #第一次发送请求设置access_token
+    conf.access_token()
+    from wechat_sdk import WechatBasic
+    wechat = WechatBasic(conf=conf)
+    wechat.create_menu({'button':[
+             {
+            'type': 'click',
+            'name': '交易社区',
+            'key': 'V1001_TODAY_MUSIC'
+        }
+    ]
+    })
+
