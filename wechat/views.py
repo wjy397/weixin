@@ -54,7 +54,11 @@ def WeChat(request):
         if request.method == 'POST':
             str_xml = request.body
             wechat.parse_data(str_xml)
-            return HttpResponse(str_xml)
+            # return HttpResponse(str_xml)
+            from wechat_sdk.messages import EventMessage
+            if isinstance(wechat.message, EventMessage):
+                if wechat.message.type == 'click':
+                    return wechat.response_text('这是测试回复！！', escape=False)
     except WechatAPIException, e:
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
 
