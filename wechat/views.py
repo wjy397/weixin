@@ -60,7 +60,7 @@ def WeChat(request):
                 if wechat.message.type == 'click':
                     return HttpResponse(wechat.response_text('这是测试回复！！', escape=False))
             elif isinstance(wechat.message, TextMessage):
-                 if wechat.message.content =='交流':
+                 if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  else:
                     return HttpResponse(wechat.response_text(type(wechat.message.content)+'平台正在紧张努力的建设中.....<br/>'
