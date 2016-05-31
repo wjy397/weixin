@@ -55,8 +55,8 @@ def init_conf(request):
     wechat.create_menu({'button':[
              {
             'type': 'click',
-            'name': '交易社区',
-            'key': 'V1001_TODAY_MUSIC'
+            'name': '交流社区',
+            'key': 'V1001_TODAY_JIAOLIU'
         }
     ]
     })
