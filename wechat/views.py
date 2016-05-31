@@ -55,12 +55,12 @@ def WeChat(request):
             str_xml = request.body
             wechat.parse_data(str_xml)
             # return HttpResponse(str_xml)
-            from wechat_sdk.messages import EventMessage
+            from wechat_sdk.messages import EventMessage,TextMessage
             if isinstance(wechat.message, EventMessage):
                 if wechat.message.type == 'click':
                     return HttpResponse(wechat.response_text('这是测试回复！！', escape=False))
             elif isinstance(wechat.message, TextMessage):
-                if wechat.message.content =='交流':
+                # if wechat.message.content =='交流':
                     return HttpResponse(wechat.response_text('test_jiaoliu', escape=False))
     except WechatAPIException, e:
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
