@@ -59,8 +59,9 @@ def WeChat(request):
             if isinstance(wechat.message, EventMessage):
                 if wechat.message.type == 'click':
                     return HttpResponse(wechat.response_text('这是测试回复！！', escape=False))
-            elif wechat.message.type=='text' and wechat.message.raw=='交流':
-                 return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
+            elif isinstance(wechat.message, TextMessage):
+                if wechat.message.content =='交流':
+                    return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
     except WechatAPIException, e:
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
 
