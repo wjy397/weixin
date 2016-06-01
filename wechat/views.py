@@ -3,6 +3,12 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import hashlib
 from wechat_sdk.exceptions import WechatAPIException
+import logging
+logging.basicConfig(level=logging.DEBUG,
+                format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                datefmt='%a, %d %b %Y %H:%M:%S',
+                filename='/root/wechat_huoyun/logs/exception.log',
+                filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
 # _session_access_token =  request.session.get('access_token',default=None)
@@ -75,9 +81,12 @@ def WeChat(request):
     # except WechatAPIException, e:
     #          return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
     except Exception,info :
-        with open('/root/wechat_huoyun/logs/exception.txt', 'a') as f:
-            # f.write('Hello, world!')
-            print >>f,"Error '%s' happened on line %d" % (info[0], info[1][1])
+        logging.debug('This is debug message')
+        logging.info('This is info message')
+        logging.warning('This is warning message')
+        # with open('/root/wechat_huoyun/logs/exception.txt', 'a') as f:
+        #     # f.write('Hello, world!')
+        #     print >>f,"Error '%s' happened on line %d" % (info[0], info[1][1])
 def init_conf(request):
         try:
             wechat.create_menu({'button':[
