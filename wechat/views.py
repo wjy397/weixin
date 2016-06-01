@@ -76,8 +76,8 @@ def WeChat(request):
     #          return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
     except Exception,info :
         with open('/root/wechat_huoyun/logs/exception.txt', 'a') as f:
-            f.write('Hello, world!\n-----------------')
-
+            # f.write('Hello, world!')
+            print >>f,"Error '%s' happened on line %d" % (info[0], info[1][1])
 def init_conf(request):
         try:
             wechat.create_menu({'button':[
