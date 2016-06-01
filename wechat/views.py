@@ -72,7 +72,7 @@ def WeChat(request):
                     return HttpResponse(wechat.response_text('欢迎关注！本平台提供专业的美国恶霸犬知识，第一手的资讯，是犬友交流交易的可靠平台，平台陆续会推出各种功能满足犬友的需求，欢迎提供宝贵意见！\n回复：“交流” 进入社区。', escape=False))
             #用户上报地理位置
                 elif wechat.message.type=='location':
-                    return HttpResponse(wechat.response_text('x:'+str(wechat.message.Latitude), escape=False))
+                    return HttpResponse(wechat.response_text('纬度:'+str(wechat.message.latitude)+'\n经度:'+str(wechat.message.longitude), escape=False))
             elif isinstance(wechat.message, TextMessage):
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
