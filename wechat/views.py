@@ -63,7 +63,7 @@ def WeChat(request):
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  else:
-                    return HttpResponse(wechat.response_text(type(wechat.message.content)+'平台正在紧张努力的建设中.....\n欢迎回复建议信息。', escape=False))
+                    return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n+欢迎回复建议信息。', escape=False))
     except WechatAPIException, e:
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
 
