@@ -76,7 +76,7 @@ def WeChat(request):
     #          return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
     except Exception,info :
             file_object = open('/root/wechat_huoyun/logs/exception.txt', 'w')
-            file_object.write('sssssssssssss')
+            file_object.write("Error '%s' happened on line %d" % (info[0], info[1][1]))
             file_object.close()
 
 def init_conf(request):
