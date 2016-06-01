@@ -62,7 +62,7 @@ def WeChat(request):
             str_xml = request.body
             wechat.parse_data(str_xml)
             # return HttpResponse(str_xml)
-            from wechat_sdk.messages import EventMessage,TextMessage
+            from wechat_sdk.messages import EventMessage,TextMessage,LocationMessage
             if isinstance(wechat.message, EventMessage):
                 #自定义菜单click
                 if wechat.message.type == 'click' and wechat.message.key == 'V1001_TODAY_JIAOLIU':
@@ -70,8 +70,9 @@ def WeChat(request):
                 #用户订阅自动回复
                 elif wechat.message.type=='subscribe':
                     return HttpResponse(wechat.response_text('欢迎关注！本平台提供专业的美国恶霸犬知识，第一手的资讯，是犬友交流交易的可靠平台，平台陆续会推出各种功能满足犬友的需求，欢迎提供宝贵意见！\n回复：“交流” 进入社区。', escape=False))
-                #用户上报地理位置
-                elif wechat.message.type=='location':
+            #用户上报地理位置
+            elif isinstance(wechat.message, LocationMessage):
+                # if wechat.message.type=='location':
                     return HttpResponse(wechat.response_text('x:'+str(wechat.message.location[0]), escape=False))
             elif isinstance(wechat.message, TextMessage):
                  if wechat.message.content ==u'交流':
@@ -79,7 +80,7 @@ def WeChat(request):
                  else:
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
-             # logging.exception(e)
+             logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
     except Exception,e :
                logging.exception(e)
