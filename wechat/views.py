@@ -73,6 +73,10 @@ def WeChat(request):
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+    except Exception,info :
+            file_object = open('/root/wechat_huoyun/logs/exception.log', 'w')
+            file_object.write("Error '%s' happened on line %d" % (info[0], info[1][1]))
+            file_object.close()
 
 def init_conf(request):
         try:
