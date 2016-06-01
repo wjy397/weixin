@@ -73,7 +73,7 @@ def WeChat(request):
             #用户上报地理位置
             elif isinstance(wechat.message, LocationMessage):
                 # if wechat.message.type=='location':
-                    return HttpResponse(wechat.response_text('x:'+str(wechat.message.location[0]), escape=False))
+                    return HttpResponse(wechat.response_text('x:'+str(wechat.message.label), escape=False))
             elif isinstance(wechat.message, TextMessage):
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
