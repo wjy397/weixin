@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import hashlib
 from wechat_sdk.exceptions import WechatAPIException
+#配置服务器报错打印日志到文件
 import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
@@ -80,13 +81,8 @@ def WeChat(request):
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     # except WechatAPIException, e:
     #          return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
-    except Exception,info :
-        logging.debug('This is debug message')
-        logging.info('This is info message')
-        logging.warning('This is warning message')
-        # with open('/root/wechat_huoyun/logs/exception.txt', 'a') as f:
-        #     # f.write('Hello, world!')
-        #     print >>f,"Error '%s' happened on line %d" % (info[0], info[1][1])
+    except Exception,e :
+               logging.exception(e)
 def init_conf(request):
         try:
             wechat.create_menu({'button':[
