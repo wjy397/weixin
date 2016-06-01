@@ -57,10 +57,15 @@ def WeChat(request):
             # return HttpResponse(str_xml)
             from wechat_sdk.messages import EventMessage,TextMessage
             if isinstance(wechat.message, EventMessage):
+                #自定义菜单click
                 if wechat.message.type == 'click' and wechat.message.key == 'V1001_TODAY_JIAOLIU':
                     return HttpResponse(wechat.response_text('这是测试回复！！', escape=False))
+                #用户订阅自动回复
                 elif wechat.message.type=='subscribe':
                     return HttpResponse(wechat.response_text('欢迎关注！本平台提供专业的美国恶霸犬知识，第一手的资讯，是犬友交流交易的可靠平台，平台陆续会推出各种功能满足犬友的需求，欢迎提供宝贵意见！\n回复：“交流” 进入社区。', escape=False))
+                #用户上报地理位置
+                elif wechat.message.type=='LOCATION':
+                    return HttpResponse(wechat.response_text(str(wechat.message.Latitude), escape=False))
             elif isinstance(wechat.message, TextMessage):
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
