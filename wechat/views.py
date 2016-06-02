@@ -70,10 +70,11 @@ def WeChat(request):
                 #用户订阅自动回复
                 elif wechat.message.type=='subscribe':
                     return HttpResponse(wechat.response_text('欢迎关注！本平台提供专业的美国恶霸犬知识，第一手的资讯，是犬友交流交易的可靠平台，平台陆续会推出各种功能满足犬友的需求，欢迎提供宝贵意见！\n回复：“交流” 进入社区。', escape=False))
-            #用户上报地理位置
+                #用户上报地理位置
                 elif wechat.message.type=='location':
                     return HttpResponse(wechat.response_text('纬度:'+str(wechat.message.latitude)+'\n经度:'+str(wechat.message.longitude), escape=False))
             elif isinstance(wechat.message, TextMessage):
+                #自动回复用户信息
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  else:
@@ -83,7 +84,9 @@ def WeChat(request):
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
     except Exception,e :
                logging.exception(e)
-def init_conf(request):
+
+#新增自定义菜单
+def create_menu(request):
         try:
             wechat.create_menu({'button':[
                      {
@@ -95,4 +98,15 @@ def init_conf(request):
             })
             return  HttpResponse('create a menu success!')
         except WechatAPIException, e:
+             logging.exception(e)
+             return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#添加临时素材
+def add_MT(request):
+        try:
+            f = open(r"E:\test.jpg")
+            json =  wechat.upload_media('image', f)
+            return  HttpResponse('add a temporary material success!\njson:'+json)
+        except WechatAPIException, e:
+             logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
