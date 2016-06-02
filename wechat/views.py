@@ -77,6 +77,8 @@ def WeChat(request):
                 #自动回复用户信息
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
+                 elif wechat.message.content ==u'图片':
+                    return HttpResponse(wechat.response_image('_HAWDRams7qHrfr9-zOwH7_TEt9KLtZ7zkCLcid43K4Cwxs6e2QVid45kqykkGfE'))
                  else:
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
@@ -98,15 +100,17 @@ def create_menu(request):
             })
             return  HttpResponse('create a menu success!')
         except WechatAPIException, e:
-             logging.exception(e)
+             # logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
 
 #添加临时素材
 def add_MT(request):
         try:
-            f = open(r"E:\test.jpg")
+            f = open('E:\\test.jpg', 'rb')
+            print(type(f))
             json =  wechat.upload_media('image', f)
+            f.close()
             return  HttpResponse('add a temporary material success!\njson:'+json)
         except WechatAPIException, e:
-             logging.exception(e)
+             # logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
