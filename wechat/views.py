@@ -126,3 +126,65 @@ def get_MT(request):
         except WechatAPIException, e:
              # logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#上传永久图片素材
+def addper_img(request):
+            try:
+                from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
+                media_file = open('E://eb.jpg', 'rb')
+                extension=''
+                if isinstance(media_file, file):
+                    extension = media_file.name.split('.')[-1].lower()
+                    if not is_allowed_extension(extension):
+                        raise ValueError('Invalid file type.')
+                    filename = media_file.name
+                else:
+                    extension = extension.lower()
+                    filename = 'temp.' + extension
+
+                uplodimg_json = wechat.request.post(
+                    url='https://api.weixin.qq.com/cgi-bin/media/uploadimg',
+                    files={
+                        'media': (filename, media_file, convert_ext_to_mime(extension))
+                    }
+                  )
+                media_file.close()
+                return str(uplodimg_json['media_id'])
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+# 新增永久素材
+def addper_MT(request):
+        try:
+             #上传永久性图片资源
+             image_media_id=addper_img(request)
+             # WechatConf._check_appid_appsecret()
+             news=[]
+             news_data = [{'title':u'test（恶霸犬交易社区）等你很久了！'
+                              ,'thumb_media_id':image_media_id
+                              ,'author':'wjy'
+                              ,'digest':u'图文消息的摘要'
+                              ,'show_cover_pic':1
+                              ,'content':'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent'
+                              ,'content_source_url': 'http://www.baidu.com'
+                           }]
+             for new in news:
+                 news_data.append({
+                     'title': new['title'],
+                     'thumb_media_id': new['thumb_media_id'],
+                     'author': new.get('author', ''),
+                    'digest': new.get('digest', ''),
+                     'show_cover_pic': new.get('show_cover_pic', 0),
+                    'content': new['content'],
+                    'content_source_url': new.get('content_source_url', '')
+               })
+             json =  wechat.request.post(
+                 url='https://api.weixin.qq.com/cgi-bin/material/add_news',
+                 data={
+                     'articles': news_data
+                 }
+             )
+             return  HttpResponse('add a persistance material success!<br/>media_id:'+str(json['media_id']))
+        except WechatAPIException, e:
+              # logging.exception(e)
+              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
