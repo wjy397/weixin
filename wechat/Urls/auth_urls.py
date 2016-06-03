@@ -7,4 +7,5 @@ auth_partterns = patterns('',
   url(r'^$', WeChat),
   url(r'^create_menu/', create_menu),
   url(r'^add_MT/', add_MT),
+  url(r'^get_MT/', get_MT),
 )

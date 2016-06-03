@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
-                filename='/root/wechat_huoyun/logs/exception.log',
+                filename='E:/exception.log',#'/root/wechat_huoyun/logs/exception.log',
                 filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
@@ -106,11 +106,23 @@ def create_menu(request):
 #添加临时素材
 def add_MT(request):
         try:
-            f = open(r'E://keng.jpg', 'rb')
-            print(type(f))
+            f = open('E://keng.jpg', 'rb')
             json =  wechat.upload_media('image',f )
             f.close()
-            return  HttpResponse('add a temporary material success!\njson:'+json)
+            return  HttpResponse('add a temporary material success!<br/>media_id:'+str(json['media_id'])+'<br/>created_at:'+str(json['created_at'])+'<br/>type:'+str(json['type']))
+        except WechatAPIException, e:
+             # logging.exception(e)
+             return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+# 获取临时素材
+def get_MT(request):
+        try:
+            response = wechat.download_media('7-LSg0N_iFq-s6atji5NWe_i_0ED4_Wioi1vVNUQ1xBoXaVUA0SZGVKM45A09Bpk')
+            #11.jpg可以是不存在的文件，但是后缀必须要和media_id对应的服务器资源后缀一样，也就是资源类型一样，否则的话如果是11.txt那么从服务器下载的图片资源会写入txt里乱码
+            with open('E://11.jpg', 'wb') as fd:
+                for chunk in response.iter_content(1024):
+                    fd.write(chunk)
+            return  HttpResponse('get a temporary material success!')
         except WechatAPIException, e:
              # logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
