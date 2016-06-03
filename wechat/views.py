@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
-                filename='E:/exception.log',#'/root/wechat_huoyun/logs/exception.log',
+                filename='/root/wechat_huoyun/logs/exception.log',
                 filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
@@ -78,7 +78,7 @@ def WeChat(request):
                  if wechat.message.content ==u'交流':
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  elif wechat.message.content ==u'图片':
-                    return HttpResponse(wechat.response_image('_HAWDRams7qHrfr9-zOwH7_TEt9KLtZ7zkCLcid43K4Cwxs6e2QVid45kqykkGfE'))
+                    return HttpResponse(wechat.response_image('7-LSg0N_iFq-s6atji5NWe_i_0ED4_Wioi1vVNUQ1xBoXaVUA0SZGVKM45A09Bpk'))
                  else:
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
@@ -106,9 +106,9 @@ def create_menu(request):
 #添加临时素材
 def add_MT(request):
         try:
-            f = open('E:\\test.jpg', 'rb')
+            f = open(r'E://keng.jpg', 'rb')
             print(type(f))
-            json =  wechat.upload_media('image', f)
+            json =  wechat.upload_media('image',f )
             f.close()
             return  HttpResponse('add a temporary material success!\njson:'+json)
         except WechatAPIException, e:
