@@ -80,9 +80,10 @@ def WeChat(request):
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  elif wechat.message.content ==u'图片':
                     return HttpResponse(wechat.response_image('7-LSg0N_iFq-s6atji5NWe_i_0ED4_Wioi1vVNUQ1xBoXaVUA0SZGVKM45A09Bpk'))
-                 #永久性素材
-                 elif wechat.message.content ==u'素材':
-                    return HttpResponse(wechat.response_image('xUhxBhgieS0TbuQ3VKqP92LHaZt-Sjx1-clxpsboA_o'))
+                 #回复图文消息点击进入永久性素材url
+                 elif wechat.message.content ==u'图文':
+                    articles=[{'title': u'第一条新闻标题', 'description': u'第一条新闻描述','PicUrl':u'http://mmbiz.qpic.cn/mmbiz/eqhuUWTCEa1dicEqx71qSDPCMep3U3UoONaqQRmCNGPEfsgFcvj62icnZoYPDZBh21EicnIDbUwQFJM6p4aicnvBJg/0?wx_fmt=jpeg', 'url': u'http://mp.weixin.qq.com/s?__biz=MzI1MTI5MzY1OQ==&mid=100000006&idx=1&sn=6091886e5fbc9a0e24dd427910723ba7#rd',}]
+                    return HttpResponse(wechat.response_news(articles))
                  else:
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
