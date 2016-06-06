@@ -79,6 +79,9 @@ def WeChat(request):
                     return HttpResponse(wechat.response_text('<a href ="http://yunzhijia.com/36FkG">点我进入社区</a>', escape=False))
                  elif wechat.message.content ==u'图片':
                     return HttpResponse(wechat.response_image('7-LSg0N_iFq-s6atji5NWe_i_0ED4_Wioi1vVNUQ1xBoXaVUA0SZGVKM45A09Bpk'))
+                 #永久性素材
+                 elif wechat.message.content ==u'素材':
+                    return HttpResponse(wechat.response_image('xUhxBhgieS0TbuQ3VKqP92LHaZt-Sjx1-clxpsboA_o'))
                  else:
                     return HttpResponse(wechat.response_text('平台正在紧张努力的建设中.....\n欢迎回复建议信息,\n我们会及时更新！', escape=False))
     except WechatAPIException, e:
@@ -127,8 +130,8 @@ def get_MT(request):
              # logging.exception(e)
              return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
 
-#上传永久图片素材
-def addper_img(request):
+#上传永久图片素材插图img返回URL
+def addper_imgurl(request):
             try:
                 from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
                 media_file = open('E://eb.jpg', 'rb')
@@ -149,23 +152,57 @@ def addper_img(request):
                     }
                   )
                 media_file.close()
+                return str(uplodimg_json['url'])
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#新增其他类型永久素材
+def addper_otherMT(request):
+            try:
+                from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
+                media_file = open('E://ee.jpg', 'rb')
+                extension=''
+                if isinstance(media_file, file):
+                    extension = media_file.name.split('.')[-1].lower()
+                    if not is_allowed_extension(extension):
+                        raise ValueError('Invalid file type.')
+                    filename = media_file.name
+                else:
+                    extension = extension.lower()
+                    filename = 'temp.' + extension
+
+                uplodimg_json = wechat.request.post(
+            url='https://api.weixin.qq.com/cgi-bin/material/add_material',
+            params={
+                'type': 'image',
+            },
+            files={
+                'media': (filename, media_file, convert_ext_to_mime(extension))
+            }
+        )
+                media_file.close()
                 return str(uplodimg_json['media_id'])
             except WechatAPIException, e:
                  # logging.exception(e)
                  return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
-# 新增永久素材
+
+
+
+# 新增永久图文素材
 def addper_MT(request):
         try:
              #上传永久性图片资源
-             image_media_id=addper_img(request)
+             image_media_url=addper_imgurl(request)
+             thumb_meid = addper_otherMT(request)
              # WechatConf._check_appid_appsecret()
              news=[]
              news_data = [{'title':u'test（恶霸犬交易社区）等你很久了！'
-                              ,'thumb_media_id':image_media_id
+                              ,'thumb_media_id':thumb_meid
                               ,'author':'wjy'
                               ,'digest':u'图文消息的摘要'
                               ,'show_cover_pic':1
-                              ,'content':'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent'
+                              ,'content':'contentcontentcontentcontentcontent<br/>contentcontent<br/><img src='+image_media_url+' />contentcontentcontentcontentcontent'
                               ,'content_source_url': 'http://www.baidu.com'
                            }]
              for new in news:
