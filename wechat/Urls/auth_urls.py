@@ -9,4 +9,7 @@ auth_partterns = patterns('',
   url(r'^add_MT/', add_MT),
   url(r'^get_MT/', get_MT),
   url(r'^addper_MT/', addper_MT),
+  url(r'^getper_MT/', getper_MT),
+  url(r'^get_totalMT/', get_totalMT),
+  url(r'^get_listMT/', get_listMT),
 )

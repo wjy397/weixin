@@ -3,12 +3,13 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import hashlib
 from wechat_sdk.exceptions import WechatAPIException
+from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
 #配置服务器报错打印日志到文件
 import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
-                filename='/root/wechat_huoyun/logs/exception.log',
+                filename='E://exception.log',#'/root/wechat_huoyun/logs/exception.log',
                 filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
@@ -133,7 +134,6 @@ def get_MT(request):
 #上传永久图片素材插图img返回URL
 def addper_imgurl(request):
             try:
-                from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
                 media_file = open('E://eb.jpg', 'rb')
                 extension=''
                 if isinstance(media_file, file):
@@ -160,7 +160,6 @@ def addper_imgurl(request):
 #新增其他类型永久素材
 def addper_otherMT(request):
             try:
-                from wechat_sdk.utils import convert_ext_to_mime,is_allowed_extension
                 media_file = open('E://ee.jpg', 'rb')
                 extension=''
                 if isinstance(media_file, file):
@@ -225,3 +224,44 @@ def addper_MT(request):
         except WechatAPIException, e:
               # logging.exception(e)
               return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#获取永久素材
+def getper_MT(request):
+            try:
+                uplodimg_json = wechat.request.post(
+            url='https://api.weixin.qq.com/cgi-bin/material/get_material',
+            data={
+                'media_id': 'xUhxBhgieS0TbuQ3VKqP97ZB6kImKay_-1mjyNlNoXU',
+            }
+        )
+                return HttpResponse(str(uplodimg_json['news_item']))
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#获取素材总数
+def get_totalMT(request):
+            try:
+                total_json = wechat.request.post(
+            url='https://api.weixin.qq.com/cgi-bin/material/get_materialcount'
+        )
+                return HttpResponse('voice_count:'+str(total_json['voice_count'])+'<br/>'+'video_count:'+str(total_json['video_count'])+'<br/>'+'image_count:'+str(total_json['image_count'])+'<br/>'+'news_count:'+str(total_json['news_count'])+'<br/>')
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#获取素材列表
+def get_listMT(request):
+            try:
+                list_json = wechat.request.post(
+            url='https://api.weixin.qq.com/cgi-bin/material/batchget_material',
+            data={
+                   'type':'news',
+                   'offset':0,
+                   'count':20
+            }
+        )
+                return HttpResponse('total_count:'+str(list_json['total_count'])+'<br/>'+'item_count:'+str(list_json['item_count'])+'<br/>'+'item:'+str(list_json['item']))
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
