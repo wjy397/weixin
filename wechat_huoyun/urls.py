@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from wechat.Urls.auth_urls import auth_partterns
+from wechat.views import *
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^wechat/', include(auth_partterns)),
-    url(r'^login.html/', include(auth_partterns)),
+    url(r'^login.html/', index),
 ]
