@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
-                filename='/root/wechat_huoyun/logs/exception.log',
+                filename='E://exception.log',#'/root/wechat_huoyun/logs/exception.log',
                 filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
@@ -100,6 +100,11 @@ def create_menu(request):
                     'type': 'click',
                     'name': '交流社区',
                     'key': 'V1001_TODAY_JIAOLIU'
+                }
+                ,{
+                    'type': 'view',
+                    'name': '用户授权',
+                    'url':'http://115.28.148.225/login.html'
                 }
             ]
             })
@@ -263,6 +268,17 @@ def get_listMT(request):
             }
         )
                 return HttpResponse('total_count:'+str(list_json['total_count'])+'<br/>'+'item_count:'+str(list_json['item_count'])+'<br/>'+'item:'+str(list_json['item']))
+            except WechatAPIException, e:
+                 # logging.exception(e)
+                 return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+#获取用户列表
+def get_listUser(request):
+            try:
+                list_json = wechat.request.post(
+            url='https://api.weixin.qq.com/cgi-bin/user/get?'
+        )
+                return HttpResponse('total:'+str(list_json['total'])+'<br/>'+'count:'+str(list_json['count'])+'<br/>'+'data:'+str(list_json['data'])+'<br/>'+'next_openid:'+str(list_json['next_openid']))
             except WechatAPIException, e:
                  # logging.exception(e)
                  return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)

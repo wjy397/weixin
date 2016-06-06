@@ -20,4 +20,5 @@ from wechat.Urls.auth_urls import auth_partterns
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^wechat/', include(auth_partterns)),
+    url(r'^login.html/', include(auth_partterns)),
 ]
