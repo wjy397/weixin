@@ -282,3 +282,8 @@ def get_listUser(request):
             except WechatAPIException, e:
                  # logging.exception(e)
                  return  HttpResponse('errcode:'+str(e.errcode)+'<br/>errmsg:'+e.errmsg)
+
+from django.shortcuts import render
+#wap页首页
+def index(request):
+    return render(request, 'wechat/index.html', '')
