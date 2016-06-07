@@ -9,7 +9,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
-                filename='E://exception.log',#'/root/wechat_huoyun/logs/exception.log',
+                filename='/root/wechat_huoyun/logs/exception.log',
                 filemode='w')
 
 # #将access_token存储在session中，用于conf初始化参数调用。
