@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #'D:\\PyCharm\\wechat_huoyun'
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#^_b7(n&u%xf+7*o=ea*m6wv6bd+jh=vhls&5oz%mchj$&(@6p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -104,5 +104,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+STATIC_ROOT =  os.path.join(BASE_DIR,'statictmp')
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DEBUG = DEBUG
+SITE_ROOT=BASE_DIR  #os.path.abspath(os.path.dirname(__file__))  -->>'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun'
+WECHAT_ROOT = os.path.join(SITE_ROOT,'wechat','static','wechat')  #'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun\\wechat'
+WECHAT_URL = '/wechat/static/wechat'
