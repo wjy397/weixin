@@ -108,11 +108,17 @@ STATIC_ROOT =  os.path.join(BASE_DIR,'static')
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    ("css", os.path.join(STATIC_ROOT,'wechat','css')),
-    ("js", os.path.join(STATIC_ROOT,'wechat','js')),
-    ("images", os.path.join(STATIC_ROOT,'wechat','images')),
+# STATICFILES_DIRS = (
+#     ("css", os.path.join(STATIC_ROOT,'wechat','css')),
+#     ("js", os.path.join(STATIC_ROOT,'wechat','js')),
+#     ("images", os.path.join(STATIC_ROOT,'wechat','images')),
+# )
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder"
 )
+
 
 TEMPLATE_DEBUG = DEBUG
 SITE_ROOT=BASE_DIR  #os.path.abspath(os.path.dirname(__file__))  -->>'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun'
