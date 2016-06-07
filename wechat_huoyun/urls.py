@@ -21,10 +21,6 @@ from wechat_huoyun import settings
 import os
 
 urlpatterns = [
-    url(r'^static/wechat/js/(?P<path>.*)$', 'django.views.static.serve'),
-    url(r'^static/wechat/css/(?P<path>.*)$', 'django.views.static.serve'),
-    url(r'^static/wechat/images/(?P<path>.*)$', 'django.views.static.serve'),
-    url(r'^static/wechat/upload/(?P<path>.*)$', 'django.views.static.serve'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^wechat/', include(auth_partterns)),
     url(r'^login.html/', index),
