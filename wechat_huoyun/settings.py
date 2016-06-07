@@ -109,9 +109,9 @@ STATIC_ROOT =  os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    ("css", os.path.join(STATIC_ROOT,'css')),
-    ("js", os.path.join(STATIC_ROOT,'js')),
-    ("images", os.path.join(STATIC_ROOT,'images')),
+    ("css", os.path.join(STATIC_ROOT,'wechat','css')),
+    ("js", os.path.join(STATIC_ROOT,'wechat','js')),
+    ("images", os.path.join(STATIC_ROOT,'wechat','images')),
 )
 
 TEMPLATE_DEBUG = DEBUG
