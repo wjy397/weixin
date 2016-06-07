@@ -104,9 +104,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_ROOT =  os.path.join(BASE_DIR,'statictmp')
+STATIC_ROOT =  os.path.join(BASE_DIR,'static')
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    ("css", os.path.join(STATIC_ROOT,'css')),
+    ("js", os.path.join(STATIC_ROOT,'js')),
+    ("images", os.path.join(STATIC_ROOT,'images')),
+)
 
 TEMPLATE_DEBUG = DEBUG
 SITE_ROOT=BASE_DIR  #os.path.abspath(os.path.dirname(__file__))  -->>'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun'
