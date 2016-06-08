@@ -104,7 +104,7 @@ def create_menu(request):
                 ,{
                     'type': 'view',
                     'name': '用户授权',
-                    'url':'http://115.28.148.225/login.html'
+                    'url':'http://115.28.148.225/login'
                 }
             ]
             })
@@ -285,5 +285,5 @@ def get_listUser(request):
 
 from django.shortcuts import render
 #wap页首页
-def index(request):
+def login(request):
     return render(request, 'wechat/index.html', '')
