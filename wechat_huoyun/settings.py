@@ -113,13 +113,13 @@ STATIC_ROOT =  os.path.join(BASE_DIR,'static')
 #     ("images", os.path.join(STATIC_ROOT,'wechat','images')),
 # )
 
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder"
-)
-
-
-TEMPLATE_DEBUG = DEBUG
-SITE_ROOT=BASE_DIR  #os.path.abspath(os.path.dirname(__file__))  -->>'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun'
-WECHAT_ROOT = os.path.join(SITE_ROOT,'wechat','static','wechat')  #'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun\\wechat'
-WECHAT_URL = '/wechat/static/wechat'
+# STATICFILES_FINDERS = (
+#     "django.contrib.staticfiles.finders.FileSystemFinder",
+#     "django.contrib.staticfiles.finders.AppDirectoriesFinder"
+# )
+#
+#
+# TEMPLATE_DEBUG = DEBUG
+# SITE_ROOT=BASE_DIR  #os.path.abspath(os.path.dirname(__file__))  -->>'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun'
+# WECHAT_ROOT = os.path.join(SITE_ROOT,'wechat','static','wechat')  #'D:\\PyCharm\\wechat_huoyun\\wechat_huoyun\\wechat'
+# WECHAT_URL = '/wechat/static/wechat'
